@@ -43,7 +43,6 @@ const App = () => {
                 <th>Personality</th>
                 <th>Hobbies</th>
                 <th>Drinks</th>
-                <th>Password</th>
                 <th>Image URLs</th> {/* New column for image URLs */}
               </tr>
             </thead>
@@ -59,17 +58,18 @@ const App = () => {
                   <td>{item.height || "N/A"}</td>
                   <td>{item.jobTitle || "N/A"}</td>
                   <td>
-                    {item.personality ? item.personality.join(", ") : "N/A"}
+                    {Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}
                   </td>
-                  <td>{item.hobbies ? item.hobbies.join(", ") : "N/A"}</td>
+                  <td>
+                    {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
+                  </td>
                   <td>{item.drinks || "N/A"}</td>
-                  <td>{item.password}</td>
                   <td>
                     {item.imageUrls && item.imageUrls.length > 0 ? (
                       <ul>
                         {item.imageUrls.map((url, index) => (
                           <li key={index}>
-                            <img src={url} alt={url} />
+                            <img src={url} alt={`Image ${index + 1}`} style={{ width: "100px", height: "100px" }} />
                           </li>
                         ))}
                       </ul>
