@@ -1,11 +1,9 @@
-// src/pages/UsersPage.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { BACKEND_BASE } from '../constant';
-import { Link } from "react-router-dom";
-import { Button, Table, Container, Row, Col } from "react-bootstrap"; // Import Bootstrap components
+import { BACKEND_BASE } from "./constant";
+import "./Users.css"; // Import the CSS file
 
-const UsersPage = () => {
+const Users = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -26,73 +24,69 @@ const UsersPage = () => {
   }, []);
 
   return (
-    <Container className="admin-container mt-4">
-      <Row>
-        <Col>
-          <Link to="/" className="text-decoration-none">
-            <Button variant="secondary" className="mb-3">Back to Landing Page</Button>
-          </Link>
-        </Col>
-      </Row>
+    <div className="admin-container">
       {loading ? (
-        <p className="text-center">Loading...</p>
+        <p className="text-center my-2">Loading...</p>
       ) : data.length > 0 ? (
-        <Table striped bordered hover responsive>
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Intention</th>
-              <th>Height</th>
-              <th>Job Title</th>
-              <th>Personality</th>
-              <th>Hobbies</th>
-              <th>Drinks</th>
-              <th>Image URLs</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item._id}>
-                <td>{item.email || "N/A"}</td>
-                <td>{((item.firstName||"N/A") + " "+(item.lastName||"N/A"))}</td>
-                <td>{item.gender || "N/A"}</td>
-                <td>{item.age || "N/A"}</td>
-                <td>{item.intention || "N/A"}</td>
-                <td>{item.height || "N/A"}</td>
-                <td>{item.jobTitle || "N/A"}</td>
-                <td>{Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}</td>
-                <td>{Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}</td>
-                <td>{item.drinks || "N/A"}</td>
-                <td>
-                  {item.imageUrls && item.imageUrls.length > 0 ? (
-                    <ul className="list-unstyled">
-                      {item.imageUrls.map((url, index) => (
-                        <li key={index} className="mb-2">
-                          <img
-                            src={url}
-                            alt={`Image ${index + 1}`}
-                            style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                            className="img-thumbnail"
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    "N/A"
-                  )}
-                </td>
+        <div className="table-container">
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Intention</th>
+                <th>Height</th>
+                <th>Job Title</th>
+                <th>Personality</th>
+                <th>Hobbies</th>
+                <th>Drinks</th>
+                <th>Image URLs</th> {/* New column for image URLs */}
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {data.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.email || "N/A"}</td>
+                  <td>{item.firstName || "N/A"}</td>
+                  <td>{item.lastName || "N/A"}</td>
+                  <td>{item.gender || "N/A"}</td>
+                  <td>{item.age || "N/A"}</td>
+                  <td>{item.intention || "N/A"}</td>
+                  <td>{item.height || "N/A"}</td>
+                  <td>{item.jobTitle || "N/A"}</td>
+                  <td>
+                    {Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}
+                  </td>
+                  <td>
+                    {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
+                  </td>
+                  <td>{item.drinks || "N/A"}</td>
+                  <td>
+                    {item.imageUrls && item.imageUrls.length > 0 ? (
+                      <ul>
+                        {item.imageUrls.map((url, index) => (
+                          <li key={index}>
+                            <img src={url} alt={`Image ${index + 1}`} style={{ width: "100px", height: "100px" }} />
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      "N/A"
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
-        <p>No data available</p>
+        <p>Empty Data</p>
       )}
-    </Container>
+    </div>
   );
 };
 
-export default UsersPage;
+export default Users;
