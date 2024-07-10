@@ -2,14 +2,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const AnalyticsPage = () => {
-    const nav = useNavigate();
+  const navigate = useNavigate();
   return (
-    <div className="analytics-container">
-      <Link to="/" className="back-button">Back to Landing Page</Link>
+    <div className="premium-page">
+      <Button onClick={() => navigate("/")} style={{backgroundColor:"rgb(72, 39, 110)"}}>Back</Button>
       <h2>Analytics Page</h2>
-      {/* Add your analytics content here */}
+      {/* Add your premium content here */}
     </div>
   );
 };

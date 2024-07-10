@@ -1,12 +1,12 @@
-// src/pages/Users.js
+// src/pages/Premium.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_BASE } from './constant';
-import "./Users.css"; // Import the CSS file
-import { Button } from "react-bootstrap";
+import "./Premium.css"; // Import the CSS file
+import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Users = () => {
+const PremiumMembers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,9 +16,11 @@ const Users = () => {
       setLoading(true);
       try {
         const response = await axios.get(`${BACKEND_BASE}/getusers`);
-        setData(response.data);
+        const premiumUsers = response.data.filter(user => user.Premium === "A");
+        setData(premiumUsers);
       } catch (error) {
         console.error("Error fetching data", error);
+        alert("Error fetching data");
       } finally {
         setLoading(false);
       }
@@ -26,9 +28,10 @@ const Users = () => {
 
     fetchData();
   }, []);
+ 
 
   return (
-    <div className="admin-container">
+    <div className="premium-container">
       <Button className="sticky-back-button" onClick={() => navigate('/')} style={{backgroundColor:"rgb(72, 39, 110)"}}>Back</Button>
       {loading ? (
         <p className="text-center my-2">Loading...</p>
@@ -42,12 +45,6 @@ const Users = () => {
                 <th>Last Name</th>
                 <th>Gender</th>
                 <th>Age</th>
-                <th>Intention</th>
-                <th>Height</th>
-                <th>Job Title</th>
-                <th>Personality</th>
-                <th>Hobbies</th>
-                <th>Drinks</th>
                 <th>Image URLs</th>
               </tr>
             </thead>
@@ -59,16 +56,6 @@ const Users = () => {
                   <td>{item.lastName || "N/A"}</td>
                   <td>{item.gender || "N/A"}</td>
                   <td>{item.age || "N/A"}</td>
-                  <td>{item.intention || "N/A"}</td>
-                  <td>{item.height || "N/A"}</td>
-                  <td>{item.jobTitle || "N/A"}</td>
-                  <td>
-                    {Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}
-                  </td>
-                  <td>
-                    {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
-                  </td>
-                  <td>{item.drinks || "N/A"}</td>
                   <td>
                     {item.imageUrls && item.imageUrls.length > 0 ? (
                       <ul className="image-list">
@@ -94,4 +81,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default PremiumMembers;

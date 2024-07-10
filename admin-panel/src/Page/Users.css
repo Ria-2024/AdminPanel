@@ -71,3 +71,54 @@
     margin-bottom: 10px;
   }
   
+
+
+
+
+
+
+  /* src/pages/Users.css */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.admin-container {
+  padding: 20px;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+  padding: 12px 15px;
+}
+
+
+.sticky-back-button {
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.user-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.image-list {
+  list-style: none;
+  padding: 0;
+}
+
+.image-list li {
+  display: inline-block;
+  margin: 5px;
+}

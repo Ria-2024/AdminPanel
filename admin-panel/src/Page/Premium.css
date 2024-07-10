@@ -1,0 +1,52 @@
+/* src/pages/Premium.css */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .premium-container {
+    padding: 20px;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .styled-table th, .styled-table td {
+    padding: 12px 15px;
+  }
+  
+  
+  .sticky-back-button, .sticky-accept-button, .sticky-reject-button {
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+    margin-right: 10px;
+  }
+  
+  .sticky-back-button {
+    left: 10px;
+  }
+  
+  .sticky-accept-button {
+    left: 100px;
+  }
+  
+  .sticky-reject-button {
+    left: 200px;
+  }
+  
+  .image-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-image {
+    width: 100px;
+    height: 100px;
+  }
+  

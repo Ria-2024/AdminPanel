@@ -1,18 +1,30 @@
 // src/pages/LandingPage.js
-import React from "react";
-import { Link } from "react-router-dom";
-import "./LandingPage.css";
+import React from 'react';
+import { Button, Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="landing-container">
-      <h1>Admin Panel</h1>
-      <div className="button-container">
-        <Link to="/users" className="nav-button">Users</Link>
-        <Link to="/analytics" className="nav-button">Analytics</Link>
-        <Link to="/premium" className="nav-button">Premium</Link>
-      </div>
-    </div>
+    <Container className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Row>
+        <Col className="d-flex justify-content-around mx-2">
+          <Button variant="primary" onClick={() => navigate('/analytics')} className="mx-2" style={{backgroundColor:"rgb(72, 39, 110)"}}>
+            Analytics
+          </Button>
+          <Button variant="primary" onClick={() => navigate('/users')} className="mx-2" style={{backgroundColor:"rgb(72, 39, 110)"}}>
+            Users
+          </Button>
+          <Button variant="primary" onClick={() => navigate('/premium')} className="mx-2" style={{backgroundColor:"rgb(72, 39, 110)"}}>
+            Applications
+          </Button>
+          <Button variant="primary" onClick={() => navigate('/premiumMembers')} className="mx-2" style={{backgroundColor:"rgb(72, 39, 110)"}}>
+            Premium Members
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
