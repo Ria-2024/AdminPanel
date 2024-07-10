@@ -38,10 +38,33 @@ const Premium = () => {
     );
   };
 
-  const handleAccept = async () => {
+  const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await axios.patch('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/acceptPremium', { emails: selectedUsers });
-      console.log(response.data);
+      const response = await axios.get(`${BACKEND_BASE}/getusers`);
+      const premiumUsers = response.data.filter(user => user.Premium === "Q");
+      setData(premiumUsers);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      alert("Error fetching data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAccept = async () => {
+    if (selectedUsers.length === 0) {
+      alert("No users selected");
+      return;
+    }
+    try {
+      const response = await axios.post('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/acceptPremium', { emails: selectedUsers }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      alert("Successfully accepted selected users");
+      fetchData(); // Refresh user list
     } catch (error) {
       console.error("Error accepting premium users", error);
       alert("Error accepting premium users");
@@ -49,9 +72,18 @@ const Premium = () => {
   };
 
   const handleReject = async () => {
+    if (selectedUsers.length === 0) {
+      alert("No users selected");
+      return;
+    }
     try {
-      const response = await axios.patch('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/rejectPremium', { emails: selectedUsers });
-      console.log(response.data);
+      const response = await axios.post('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/rejectPremium', { emails: selectedUsers }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      alert("Successfully rejected selected users");
+      fetchData(); // Refresh user list
     } catch (error) {
       console.error("Error rejecting premium users", error);
       alert("Error rejecting premium users");
