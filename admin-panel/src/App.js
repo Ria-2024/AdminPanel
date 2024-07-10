@@ -1,6 +1,5 @@
-// src/App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Page/Landing";
 import AnalyticsPage from "./Page/Analytics";
 import Users from "./Page/Users";
@@ -18,7 +17,6 @@ const App = () => {
         <Route path="/users" element={<Users />} />
         <Route path="/premium" element={<PremiumPage />} />
         <Route path="/premiumMembers" element={<PremiumMembers />} />
-        
       </Routes>
     </Router>
   );
