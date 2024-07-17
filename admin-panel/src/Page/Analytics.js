@@ -12,7 +12,7 @@ const AnalyticsPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const response = await await axios.get(`${BACKEND_BASE}/getAnalytics`);
+        const response =  await axios.get(`${BACKEND_BASE}/getAnalytics`);
         setAnalyticsData(response.data);
       } catch (error) {
         console.error('Error fetching analytics data:', error);
