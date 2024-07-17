@@ -1,14 +1,13 @@
-// src/pages/Premium.js
+// src/pages/Users.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_BASE } from './constant';
-import "./Premium.css"; // Import the CSS file
-import { Button, Form } from "react-bootstrap";
+import "./Users.css"; // Import the CSS file
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Premium = () => {
   const [data, setData] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -16,12 +15,10 @@ const Premium = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BACKEND_BASE}/getusers`);
-        const premiumUsers = response.data.filter(user => user.Premium === "Q");
-        setData(premiumUsers);
+        const response = await axios.get(`${BACKEND_BASE}/getPremiumUsers`);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
-        alert("Error fetching data");
       } finally {
         setLoading(false);
       }
@@ -30,71 +27,9 @@ const Premium = () => {
     fetchData();
   }, []);
 
-  const handleCheckboxChange = (email) => {
-    setSelectedUsers(prevSelectedUsers =>
-      prevSelectedUsers.includes(email)
-        ? prevSelectedUsers.filter(userEmail => userEmail !== email)
-        : [...prevSelectedUsers, email]
-    );
-  };
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`${BACKEND_BASE}/getusers`);
-      const premiumUsers = response.data.filter(user => user.Premium === "Q");
-      setData(premiumUsers);
-    } catch (error) {
-      console.error("Error fetching data", error);
-      alert("Error fetching data");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAccept = async () => {
-    if (selectedUsers.length === 0) {
-      alert("No users selected");
-      return;
-    }
-    try {
-      const response = await axios.post('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/acceptPremium', { emails: selectedUsers }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      alert("Successfully accepted selected users");
-      fetchData(); // Refresh user list
-    } catch (error) {
-      console.error("Error accepting premium users", error);
-      alert("Error accepting premium users");
-    }
-  };
-
-  const handleReject = async () => {
-    if (selectedUsers.length === 0) {
-      alert("No users selected");
-      return;
-    }
-    try {
-      const response = await axios.post('https://us-east-1.aws.data.mongodb-api.com/app/application-0-xinyfjf/endpoint/rejectPremium', { emails: selectedUsers }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      alert("Successfully rejected selected users");
-      fetchData(); // Refresh user list
-    } catch (error) {
-      console.error("Error rejecting premium users", error);
-      alert("Error rejecting premium users");
-    }
-  };
-
   return (
-    <div className="premium-container">
+    <div className="admin-container">
       <Button className="sticky-back-button" onClick={() => navigate('/')} style={{backgroundColor:"rgb(72, 39, 110)"}}>Back</Button>
-      <Button className="sticky-accept-button" onClick={handleAccept} style={{backgroundColor:"rgb(72, 39, 110)", marginRight: "10px"}}>Accept</Button>
-      <Button className="sticky-reject-button" onClick={handleReject} style={{backgroundColor:"rgb(72, 39, 110)"}}>Reject</Button>
       {loading ? (
         <p className="text-center my-2">Loading...</p>
       ) : data.length > 0 ? (
@@ -102,30 +37,38 @@ const Premium = () => {
           <table className="styled-table">
             <thead>
               <tr>
-                <th>Select</th>
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Gender</th>
                 <th>Age</th>
+                <th>Intention</th>
+                <th>Height</th>
+                <th>Job Title</th>
+                <th>Personality</th>
+                <th>Hobbies</th>
+                <th>Drinks</th>
                 <th>Image URLs</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item) => (
                 <tr key={item._id}>
-                  <td>
-                    <Form.Check
-                      type="checkbox"
-                      onChange={() => handleCheckboxChange(item.email)}
-                      checked={selectedUsers.includes(item.email)}
-                    />
-                  </td>
                   <td>{item.email || "N/A"}</td>
                   <td>{item.firstName || "N/A"}</td>
                   <td>{item.lastName || "N/A"}</td>
                   <td>{item.gender || "N/A"}</td>
                   <td>{item.age || "N/A"}</td>
+                  <td>{item.intention || "N/A"}</td>
+                  <td>{item.height || "N/A"}</td>
+                  <td>{item.jobTitle || "N/A"}</td>
+                  <td>
+                    {Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}
+                  </td>
+                  <td>
+                    {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
+                  </td>
+                  <td>{item.drinks || "N/A"}</td>
                   <td>
                     {item.imageUrls && item.imageUrls.length > 0 ? (
                       <ul className="image-list">

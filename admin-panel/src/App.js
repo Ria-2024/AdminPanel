@@ -3,10 +3,10 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Page/Landing";
 import AnalyticsPage from "./Page/Analytics";
 import Users from "./Page/Users";
-import PremiumPage from "./Page/Premium";
+import Applicants from "./Page/Applicants";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"; // Import the CSS file
-import PremiumMembers from "./Page/PremiumMembers";
+import PremiumMembers from "./Page/Premium";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/premium" element={<PremiumPage />} />
+        <Route path="/premium" element={<Applicants />} />
         <Route path="/premiumMembers" element={<PremiumMembers />} />
       </Routes>
     </Router>

@@ -1,12 +1,12 @@
-// src/pages/Premium.js
+// src/pages/Users.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_BASE } from './constant';
-import "./Premium.css"; // Import the CSS file
-import { Button, Form } from "react-bootstrap";
+import "./Users.css"; // Import the CSS file
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const PremiumMembers = () => {
+const Applicants = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,12 +15,10 @@ const PremiumMembers = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BACKEND_BASE}/getusers`);
-        const premiumUsers = response.data.filter(user => user.Premium === "A");
-        setData(premiumUsers);
+        const response = await axios.get(`${BACKEND_BASE}/getApplicants`);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
-        alert("Error fetching data");
       } finally {
         setLoading(false);
       }
@@ -28,10 +26,9 @@ const PremiumMembers = () => {
 
     fetchData();
   }, []);
- 
 
   return (
-    <div className="premium-container">
+    <div className="admin-container">
       <Button className="sticky-back-button" onClick={() => navigate('/')} style={{backgroundColor:"rgb(72, 39, 110)"}}>Back</Button>
       {loading ? (
         <p className="text-center my-2">Loading...</p>
@@ -45,6 +42,12 @@ const PremiumMembers = () => {
                 <th>Last Name</th>
                 <th>Gender</th>
                 <th>Age</th>
+                <th>Intention</th>
+                <th>Height</th>
+                <th>Job Title</th>
+                <th>Personality</th>
+                <th>Hobbies</th>
+                <th>Drinks</th>
                 <th>Image URLs</th>
               </tr>
             </thead>
@@ -56,6 +59,16 @@ const PremiumMembers = () => {
                   <td>{item.lastName || "N/A"}</td>
                   <td>{item.gender || "N/A"}</td>
                   <td>{item.age || "N/A"}</td>
+                  <td>{item.intention || "N/A"}</td>
+                  <td>{item.height || "N/A"}</td>
+                  <td>{item.jobTitle || "N/A"}</td>
+                  <td>
+                    {Array.isArray(item.personality) ? item.personality.join(", ") : "N/A"}
+                  </td>
+                  <td>
+                    {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
+                  </td>
+                  <td>{item.drinks || "N/A"}</td>
                   <td>
                     {item.imageUrls && item.imageUrls.length > 0 ? (
                       <ul className="image-list">
@@ -81,4 +94,4 @@ const PremiumMembers = () => {
   );
 };
 
-export default PremiumMembers;
+export default Applicants;

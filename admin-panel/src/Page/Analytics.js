@@ -1,17 +1,56 @@
-// src/pages/AnalyticsPage.js
-import React from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+// src/components/AnalyticsPage.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AnalyticsPage = () => {
-  const navigate = useNavigate();
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAnalyticsData = async () => {
+      try {
+        const response = await await axios.get(`${BACKEND_BASE}/getAnalytics`);
+        setAnalyticsData(response.data);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnalyticsData();
+  }, []);
+
   return (
-    <div className="premium-page">
-      <Button onClick={() => navigate("/")} style={{backgroundColor:"rgb(72, 39, 110)"}}>Back</Button>
-      <h2>Analytics Page</h2>
-      {/* Add your premium content here */}
-    </div>
+    <Container>
+      <h1 className="my-4">Analytics Data</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <Table responsive="sm" striped bordered hover>
+          <thead>
+            <tr>
+              <th>Screen ID</th>
+              <th>Action</th>
+              <th>Profile ID</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {analyticsData.map((event, index) => (
+              <tr key={index}>
+                <td>{event.screenId}</td>
+                <td>{event.action}</td>
+                <td>{event.profileID}</td>
+                <td>{new Date(event.timestamp).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </Container>
   );
 };
 
