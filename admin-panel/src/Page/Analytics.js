@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BACKEND_BASE } from './constant';
 
 const AnalyticsPage = () => {
   const [analyticsData, setAnalyticsData] = useState([]);
