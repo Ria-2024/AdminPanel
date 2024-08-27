@@ -37,6 +37,7 @@ const Applicants = () => {
           <table className="styled-table">
             <thead>
               <tr>
+                <th>Type</th>
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -54,6 +55,7 @@ const Applicants = () => {
             <tbody>
               {data.map((item) => (
                 <tr key={item._id}>
+                  <td>{item.Type || "N/A"}</td>
                   <td>{item.email || "N/A"}</td>
                   <td>{item.firstName || "N/A"}</td>
                   <td>{item.lastName || "N/A"}</td>
