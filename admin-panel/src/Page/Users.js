@@ -48,7 +48,6 @@ const Users = () => {
                 <th>Personality</th>
                 <th>Hobbies</th>
                 <th>Drinks</th>
-                <th>Image URLs</th>
               </tr>
             </thead>
             <tbody>
@@ -69,19 +68,6 @@ const Users = () => {
                     {Array.isArray(item.hobbies) ? item.hobbies.join(", ") : "N/A"}
                   </td>
                   <td>{item.drinks || "N/A"}</td>
-                  <td>
-                    {item.imageUrls && item.imageUrls.length > 0 ? (
-                      <ul className="image-list">
-                        {item.imageUrls.map((url, index) => (
-                          <li key={index}>
-                            <img src={url} alt={`Image ${index + 1}`} className="user-image" />
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      "N/A"
-                    )}
-                  </td>
                 </tr>
               ))}
             </tbody>
