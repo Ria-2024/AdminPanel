@@ -43,8 +43,8 @@ const Users = () => {
           <table className="styled-table">
             <thead>
               <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
+                <th>ProfileFor</th>
                 <th>Community</th>
                 <th>Email</th>
                 <th>Gender</th>
@@ -67,8 +67,8 @@ const Users = () => {
             <tbody>
               {data.map((item) => (
                 <tr key={item._id}>
-                  <td>{item.firstName || "N/A"}</td>
-                  <td>{item.lastName || "N/A"}</td>
+                  <td>{item.firstName+" "+item.lastName || "N/A"}</td>
+                  <td>{item.profileFor || "N/A"}</td>
                   <td>{item.community || "N/A"}</td>
                   <td>{item.email || "N/A"}</td>
                   <td>{item.gender || "N/A"}</td>
